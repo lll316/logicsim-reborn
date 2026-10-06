@@ -1,118 +1,124 @@
-# logicsim
+# LogicSim Reborn — 逻辑模拟器
 
+一个基于 **逆波兰逻辑表达式** 的纯静态逻辑电路模拟器。输入逆波兰逻辑表达式，一键解析并自动渲染为规范的逻辑电路图，支持缩放、平移、节点编辑与文件存取。
 
-## Getting started
+本项目为纯静态站点，无需构建工具，可直接在浏览器中运行。
 
-本程序可通过直接 git clone 项目后，点击本目录下的 index.html 打开，
+---
 
-也可以直接访问本项目的 [gitlab pages](https://kuangdash.gitlab.io/logicsim)，
+## ✨ 功能特性
 
-之后在“解析文本”按钮上面的文本框内输入“逆波兰逻辑表达式”。
+- **逆波兰表达式解析**：支持五种逻辑运算符
+  - `.`：逻辑与（AND）
+  - `,`：逻辑或（OR）
+  - `<`：逻辑非（NOT）
+  - `>`：逻辑推出（蕴含，IMPLICATION）
+  - `=`：逻辑等价 / 同或（EQUIVALENCE）
+- **自动出图**：将表达式解析为 JSON 模型，并自动布局生成规范逻辑电路图
+- **图形交互**：
+  - 画布缩放（滚轮 / 快捷键）
+  - 画布平移与导航
+  - 小地图（Minimap）概览与定位
+  - 节点选中、重命名、备注编辑
+- **文件操作**：
+  - 载入 / 保存文本
+  - JSON 模型与图形双向转换（文本转图 / 图转文本）
+- **现代 UI**：基于 Tailwind CSS 的卡片式布局，简洁美观
 
-“逆波兰逻辑表达式”支持五种逻辑操作符：
-{
-“.”：“a b .”代表“a”和“b”的逻辑与，
-“,”：“a b ,”代表“a”和“b”的逻辑或，
-“<”：“a <”代表“a”的逻辑非，
-“>”：“a b >”代表“a”和“b”的逻辑推出，
+---
 
-“=”：“a b =”代表“a”和“b”的逻辑等价/同或
-}。
+## 🚀 运行方式
 
-逆波兰逻辑表达式组合的举例说明：
-{
-“a b . fe >”即代表逻辑表达“a 与 b   推出了   fe”，
+本程序为纯静态站点，**无需 `npm install` / `npm build`**，有以下几种运行方式：
 
-“a b . fe ge > =”即代表逻辑表达“a 与 b  等价于  fe 推出了 ge”
-}。
+### 方式一：直接打开（推荐本地调试）
 
-之后点击“解析文本”按钮，将“逆波兰逻辑表达式”转换为适合图形表示的 JSON 格式，
-
-之后再点击“解析文本”按钮旁的“文本转图”，得到最终的正规图形表示。
-
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
-
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-* [Create](https://docs.gitlab.com/user/project/repository/web_editor/#create-a-file) or [upload](https://docs.gitlab.com/user/project/repository/web_editor/#upload-a-file) files
-* [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
-
-```
-cd existing_repo
-git remote add origin https://gitlab.com/kuangdash/logicsim.git
-git branch -M main
-git push -uf origin main
+```bash
+git clone <仓库地址> logicsim
+cd logicsim/public
 ```
 
-## Integrate with your tools
+直接双击打开 `public/index.html` 即可在浏览器中运行。
 
-* [Set up project integrations](https://gitlab.com/kuangdash/logicsim/-/settings/integrations)
+### 方式二：本地启动 HTTP 服务
 
-## Collaborate with your team
+在项目根目录执行以下命令，启动一个简单的本地静态服务器：
 
-* [Invite team members and collaborators](https://docs.gitlab.com/user/project/members/)
-* [Create a new merge request](https://docs.gitlab.com/user/project/merge_requests/creating_merge_requests/)
-* [Automatically close issues from merge requests](https://docs.gitlab.com/user/project/issues/managing_issues/#closing-issues-automatically)
-* [Enable merge request approvals](https://docs.gitlab.com/user/project/merge_requests/approvals/)
-* [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+```bash
+python -m http.server 8000
+```
 
-## Test and Deploy
+然后浏览器访问：
 
-Use the built-in continuous integration in GitLab.
+```
+http://localhost:8000/public/
+```
 
-* [Get started with GitLab CI/CD](https://docs.gitlab.com/ci/quick_start/)
-* [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/user/application_security/sast/)
-* [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/topics/autodevops/requirements/)
-* [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/user/clusters/agent/)
-* [Set up protected environments](https://docs.gitlab.com/ci/environments/protected_environments/)
+### 方式三：在线访问（Vercel 部署）
 
-***
+本项目已配置为可通过 **Vercel** 部署的静态站点，线上访问地址：
 
-# Editing this README
+```
+https://<你的项目>.vercel.app
+```
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+> 部署方式：将仓库导入 [Vercel](https://vercel.com)，Framework Preset 选择 **Other**，构建命令留空（纯静态），输出目录设为 `public` 即可。
 
-## Suggestions for a good README
+---
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+## 🧮 使用说明
 
-## Name
-Choose a self-explaining name for your project.
+1. 在顶部「输入区」文本框内输入**逆波兰逻辑表达式**；
+2. 点击 **「解析文本」**，将表达式解析并转换为适合图形表示的 JSON 模型；
+3. 点击 **「文本转图」**，渲染生成最终的规范逻辑电路图。
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+### 表达式规则
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+**五种逻辑运算符**
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+| 运算符 | 含义 | 写法示例 |
+|--------|------|----------|
+| `.` | 逻辑与 | `a b .`（a 与 b） |
+| `,` | 逻辑或 | `a b ,`（a 或 b） |
+| `<` | 逻辑非 | `a <`（非 a） |
+| `>` | 逻辑推出 | `a b >`（a 推出 b） |
+| `=` | 逻辑等价/同或 | `a b =`（a 等价于 b） |
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+**组合示例**
 
-## Usage
+- `a b . fe >` 即代表逻辑表达式：**a 与 b 推出了 fe**
+- `a b . fe ge > =` 即代表逻辑表达式：**a 与 b 等价于 fe 推出了 ge**
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+---
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+## 🗂 项目结构
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+```
+.
+├── public/                 # 静态站点根目录（部署目录）
+│   ├── index.html          # 入口页面（Tailwind CSS 重构）
+│   ├── style.css           # 布局样式
+│   ├── LogicParser.js      # 逆波兰表达式 → 逻辑真值表模型
+│   ├── ViewGen.js          # 模型 → JointJS 图形渲染
+│   ├── latch.json          # 示例模型文件
+│   ├── assets/             # 图标与 SVG 资源
+│   └── lib/                # 第三方依赖（JointJS、jQuery 等）
+├── README.md
+└── .gitlab-ci.yml
+```
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+---
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+## 🛠 技术栈
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+- **JointJS** — 图形 / 画布渲染
+- **jQuery / Lodash / Backbone** — 交互与基础工具
+- **Dagre** — 有向图自动布局
+- **Select2** — 搜索选择控件
+- **Tailwind CSS** — 现代 UI 样式
 
-## License
-For open source projects, say how it is licensed.
+---
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+## 📄 License
+
+© LogicSim Reborn. 仅供学习交流使用。
