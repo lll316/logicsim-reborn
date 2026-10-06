@@ -54,15 +54,21 @@ python -m http.server 8000
 http://localhost:8000/public/
 ```
 
-### 方式三：在线访问（Vercel 部署）
+### 方式三：在线访问（GitHub Pages 部署）
 
-本项目已配置为可通过 **Vercel** 部署的静态站点，线上访问地址：
+本项目已部署为 **GitHub Pages** 静态站点，线上访问地址：
 
 ```
-https://<你的项目>.vercel.app
+https://lll316.github.io/logicsim-reborn/
 ```
 
-> 部署方式：将仓库导入 [Vercel](https://vercel.com)，Framework Preset 选择 **Other**，构建命令留空（纯静态），输出目录设为 `public` 即可。
+项目源码仓库：
+
+```
+https://github.com/lll316/logicsim-reborn
+```
+
+> 部署方式：在仓库 **Settings → Pages** 中选择 **Deploy from a branch**，分支选 `main`，目录选 `/public`（⚠️ `index.html` 位于 `public/` 子目录，不可选 `/ (root)`）。
 
 ---
 
